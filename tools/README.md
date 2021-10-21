@@ -21,6 +21,11 @@ echo 'export PATH=$PATH:$HOME/bin' >> ~/.zshrc
 ```
 
 ## Instalando ferramentas
+### Docker
+Acessar e baixar o instalador em https://docs.docker.com/get-docker/
+
+### Podman (alternativa ao Docker)
+Instalar utilizando a documentação https://podman.io/getting-started/installation
 ### kubectl
 ##### Cliente da API do Kubernetes
 ```shell
