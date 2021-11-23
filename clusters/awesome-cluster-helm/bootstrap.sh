@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Create kube config dir
-mkdir -p .kube
-
 # Generate cluster name
 CLUSTER_NAME=cluster-$(openssl rand -hex 3)
 
