@@ -31,7 +31,6 @@ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo add metallb https://metallb.github.io/metallb
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add grafana https://grafana.github.io/helm-charts
-helm repo add linkerd https://helm.linkerd.io/stable
 helm repo add podinfo https://stefanprodan.github.io/podinfo
 helm repo update
 
@@ -92,7 +91,6 @@ helm upgrade --install --wait frontend \
   --set "ingress.hosts[0].host=podinfo.$KIND_INGRESS_ADDRESS" \
   --set "ingress.hosts[0].paths[0].path=/" \
   --set "ingress.hosts[0].paths[0].pathType=ImplementationSpecific" \
-  --set linkerd.profile.enabled=true \
   --set ingress.className=nginx
 kubectl wait --for condition=Available=True deploy/frontend-podinfo -n default --timeout -1s
 
