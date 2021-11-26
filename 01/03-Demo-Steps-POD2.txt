@@ -1,0 +1,6 @@
+kubectl -n proj01 create -f https://gtup.me/37jh1xj
+kubectl -n proj01 describe pod pod-with-sidecar
+kubectl -n proj01 exec -it pod-with-sidecar -c app-container tail /var/log/app.txt
+kubectl -n proj01 exec -it pod-with-sidecar -c sidecar-container tail /usr/share/nginx/html/app.txt
+
+Acesse um dos containers e adicione um log manual e veja novamente o arquivo atualizado no outro.
