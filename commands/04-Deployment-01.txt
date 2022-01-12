@@ -1,0 +1,19 @@
+docker login
+
+git clone https://github.com/juniorjbn/compose-scale
+
+docker build -t <REPO_NAME>/demo-python:0.1 .
+docker push <REPO_NAME>/demo-python:0.1
+
+kubectl create ns demo
+kubectl -n demo create deployment hello-node --image=<REPO_NAME>/demo-python:0.1
+kubectl -n demo create deployment redis --image=redis:3.2-alpine
+kubectl -n demo expose deployment redis --port=6379 --target-port=6379
+kubectl -n demo get all
+kubectl -n demo get events
+
+export POD_NAME=$(kubectl -n demo get pods -l app=hello-node -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
+
+kubectl -n demo port-forward pod/$POD_NAME 8080
+
+Acessar em seu navegador http://localhost:8080

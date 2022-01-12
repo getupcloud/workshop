@@ -1,0 +1,9 @@
+kubectl create ns limits
+kubectl -n limits create -f https://bit.ly/2CxcoEz
+
+
+ 	Atenção aos recursos e limites criados para os pods.
+
+kubectl create ns constraints-mem-example
+kubectl -n constraints-mem-example create -f https://bit.ly/2NvoPmM
+kubectl -n constraints-mem-example create deployment hello-node --image=<REPO_NAME>/demo-python:0.1 

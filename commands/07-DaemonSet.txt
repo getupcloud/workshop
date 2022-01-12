@@ -1,0 +1,6 @@
+CTRL + Click -> https://gtup.me/daemonset 
+
+kubectl -n <namespace> create -f example-daemonset.yaml
+kubectl -n <namespace> get pods
+kubectl -n <namespace> describe pod/hello-daemonset-XXXX | grep Node
+
