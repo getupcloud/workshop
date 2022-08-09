@@ -1,8 +1,0 @@
-CTRL + Click -> https://hub.kubeapps.com/charts/bitnami/mariadb-galera
-
-kubectl create ns mariadb
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install maria-galera --set persistence.size=1Gi --namespace mariadb bitnami/mariadb-galera
-kubectl get sts -w --namespace mariadb -l app.kubernetes.io/instance=maria-galera
-kubectl -n mariadb scale sts maria-galera-mariadb-galera --replicas=0
-helm uninstall maria-galera -n mariadb

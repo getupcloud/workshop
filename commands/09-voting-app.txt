@@ -1,5 +1,0 @@
-git clone https://github.com/juniorjbn/example-voting-app
-
-Acessar o diretório criado
-kubectl create ns vote 
-kubectl create -f k8s-specifications/
