@@ -77,7 +77,7 @@ Exemplo de manifesto de um pod contento uma imagem de nginx:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: nginx-01
 spec:
   containers:
   - name: nginx
@@ -98,7 +98,7 @@ kubectl apply -f https://k8s.io/examples/pods/simple-pod.yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: nginx-02
   labels:
     app: nginx
 spec:
@@ -122,7 +122,7 @@ kubectl apply -f sidecar.yaml
 Execute um *netstat* e *curl* dentro do container de nome sidecar:
 
 ```
-kubectl exec nginx -c sidecar
+kubectl exec -it nginx-02 -c sidecar -- sh
 netstat -tupan
 curl localhost
 ```
@@ -130,8 +130,8 @@ curl localhost
 Depois veja os logs separadamente de cada container:
 
 ```
-kubectl logs nginx -c nginx
-kubectl logs nginx -c sidecar
+kubectl logs nginx-02 -c nginx-container
+kubectl logs nginx-02 -c sidecar
 ```
 
 #### 03 - Init containers
@@ -199,4 +199,6 @@ spec:
     targetPort: 9377
 ```
 
+```
 kubectl apply -f services.yaml
+```
