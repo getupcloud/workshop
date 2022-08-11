@@ -76,7 +76,7 @@ kubectl scale deployment/nginx-deployment --replicas=5
 Para utilização do HPA precisaremos instalar o [metrics-server](https://github.com/kubernetes-sigs/metrics-server) no cluster:
 
 ```
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
 Para concluir a instalação, edite o deployment adicionando um campo `--kubelet-insecure-tls` da lista de `args` do container.
