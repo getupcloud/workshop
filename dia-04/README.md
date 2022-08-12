@@ -160,7 +160,7 @@ kubectl expose deploy/nginx --port=80 --target-port=80 --type=LoadBalancer
 Crie os seguintes recursos no cluster:
 
 ```
-----
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
