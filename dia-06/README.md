@@ -36,7 +36,7 @@ spec:
         args:
         - /bin/sh
         - -c
-        - while sleep 30; do ls -l; done
+        - while sleep 30; do ls -l /leitura; done
         volumeMounts:
         - mountPath: /leitura
           name: pasta-comum

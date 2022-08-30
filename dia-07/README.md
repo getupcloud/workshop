@@ -89,6 +89,64 @@ imagePullSecrets:
 
 O Kubernetes provê um tipo de secret própria para armazenar certificados TLS de aplicações (`kubernetes.io/tls`).
 
+Crie um arquivo (`confs.cnf`) passando as configurações do certificado:
+
+```
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+[req_distinguished_name]
+C = BR
+ST = RJ
+L = Rio de Janeiro
+O = Sua Empresa
+OU = Departamento de TI
+CN = *.workshop.getup.local
+[v3_req]
+keyUsage = critical, digitalSignature, keyAgreement
+extendedKeyUsage = serverAuth
+```
+
+Rode o openssl para a criação do certificado (`tls.crt`) e da chave privada (`tls.key`):
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout tls.key -out tls.crt -config confs.cnf -sha256
+```
+
+Instale o ingress-nginx no cluster:
+
+```
+helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace \
+--set controller.extraArgs.default-ssl-certificate=ingress-nginx/default-certificate
+```
+
+Uma vez o ingress instalado, basta criar a secret padrão no mesmo namespace do controlador:
+
+```
+kubectl create secret tls default-certificate -n ingress-nginx\
+  --cert=tls.crt \
+  --key=tls.key
+```
+
+Para o teste final, crie um deployment de nginx para expô-lo através de um ingress:
+
+```
+kubectl create deploy nginx --port=80 --image=nginx:alpine
+```
+
+```
+kubectl expose deploy/nginx --port=80 --target-port=80
+```
+
+```
+kubectl create ingress nginx --class=nginx --rule="nginx.marcelo.local/=nginx:80,tls"
+```
+
+```
+curl -kv https://nginx.marcelo.local
+```
+
 ```
 apiVersion: v1
 kind: Secret
