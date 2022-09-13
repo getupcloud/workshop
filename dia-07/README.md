@@ -117,6 +117,14 @@ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout tls.key -out tls.crt
 Instale o ingress-nginx no cluster:
 
 ```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+```
+
+```
+helm repo update
+```
+
+```
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace \
 --set controller.extraArgs.default-ssl-certificate=ingress-nginx/default-certificate
 ```
@@ -140,11 +148,11 @@ kubectl expose deploy/nginx --port=80 --target-port=80
 ```
 
 ```
-kubectl create ingress nginx --class=nginx --rule="nginx.marcelo.local/=nginx:80,tls"
+kubectl create ingress nginx --class=nginx --rule="nginx.workshop.getup.local/=nginx:80,tls"
 ```
 
 ```
-curl -kv https://nginx.marcelo.local
+curl -kv https://nginx.workshop.getup.local
 ```
 
 ```
