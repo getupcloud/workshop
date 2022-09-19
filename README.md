@@ -10,11 +10,11 @@ desenvolvimento de software para rodar em ambientes Kubernetes.
 ## Conteúdo
 
 - Build
-  - Dockerfile
-  - Ferramentas de build
+  - [Dockerfile](01-docker)
+  - [Ferramentas de build](01-docker)
 - Deploy
-  - Pod
-  - Deployment
+  - [Pod](02-pod)
+  - [Deployment](03-deployment)
   - Estratégias de deploy
   - Chegagem da saúde das aplicações com Probes
   - Autoscaling com HPA
