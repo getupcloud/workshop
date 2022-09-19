@@ -48,19 +48,23 @@ docker build . -t node-web-app
 Rode o container:
 
 ```
-docker run -d node-web-app
+docker run --name node-web-app -d node-web-app
 ```
 
 Acesse o shell do container e liste os processos:
 
 ```
-docker exec -it <container-id> bash
-ps -fax
+docker exec -it node-web-app bash
+ps -aux
 ```
+Repita os passos anteriores para o arquivo `Dockerfile-sample`:
 
-
-
-
+```
+docker build . -t node-web-app-sample -f Dockerfile-sample
+docker run --name node-web-app-sample -d node-web-app-sample
+docker exec -it node-web-app-sample bash
+ps -aux
+```
 
 
 
