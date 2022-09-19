@@ -25,7 +25,7 @@ dive mysql:latest
 ## Exercício 02
 
 ### Tarefa:
-- Crie uma imagem docker para a aplicação em Node.js de exemplo presente na pasta [exercicio-02](01-docker/exercicio-02). Nessa pasta você encontrará os arquivos `package.json` e o `server.js`. Após a criação da imagem, rode um container e liste seus processos para avaliar seu comportamento. Encontre esse mesmo processo a partir do host e identifique com qual usuário ele está rodando.
+- Crie uma imagem docker para a aplicação em Node.js de exemplo presente na pasta [exercicio-02](exercicio-02). Nessa pasta você encontrará os arquivos `package.json` e o `server.js`. Após a criação da imagem, rode um container e liste seus processos para avaliar seu comportamento. Encontre esse mesmo processo a partir do host e identifique com qual usuário ele está rodando.
 
 ### Solução:
 - Crie o arquivo `.dockerignore` no mesmo diretório do código e adicione o seguinte conteúdo:
