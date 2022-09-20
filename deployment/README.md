@@ -4,7 +4,7 @@
 
 Após o contato com os pods, precisamos subir um nível na abstração e apresentar novos objetos que permitem um controle e gestão mais refinado das aplicações. O próximo nível após os pods é o objeto chamado *ReplicaSet*, cuja função é manter um número estabelecido de pods idênticos no cluster. O mecanismo de identificação de quais pods serão geridos pelo ReplicaSet baseia-se no uso de labels aplicados aos pods. Acima desse nível, temos o Deployment, que gerencia os ReplicaSet e entrega um recuros de controle de atualizações. Veja a figura abaixo para visualizar a hierarquia de um deployment:
 
-![deploymet](deployment.png)
+![deploymet](../img/deployment.png)
 
 ### Usando Deployments
 
