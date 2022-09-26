@@ -20,4 +20,4 @@ desenvolvimento de software para rodar em ambientes Kubernetes.
   - Estratégias de deploy
   - Chegagem da saúde das aplicações com Probes
   - Autoscaling com HPA
-  - Entrega de software com Kustomize e Flux
+  - Entrega de software com [Kustomize](kustomize) e [Flux](flux)
