@@ -54,8 +54,9 @@ flux uninstall
 ```
 flux bootstrap github \
   --owner=mmmarceleza \
-  --repository=devops \
-  --path=kubernetes/flux/examples/01 \
+  --repository=workshop \
+  --branch=developer \
+  --path=flux/examples/01 \
   --interval=1m \
   --personal
 ```
