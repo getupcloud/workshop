@@ -1,0 +1,11 @@
+{{- if and .Values.storage.enabled .Values.storage.pv }}
+{{- with .Values.storage.pv -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .name }}
+  annotations: {{ toYaml .annotations | nindent 4 }}
+  labels: {{ toYaml .labels | nindent 4 }}
+spec: {{ toYaml .spec | nindent 2 }}
+{{- end }}
+{{- end }}

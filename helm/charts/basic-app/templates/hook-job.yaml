@@ -1,0 +1,24 @@
+{{- range .Values.hooks -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "basic-deployment.name" $ }}-{{ .name }}
+  labels:
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    helm.sh/chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+  annotations:
+    "helm.sh/hook": {{ .hooks | join "," }}
+    "helm.sh/hook-weight": "{{ default 0 .weight }}"
+    "helm.sh/hook-delete-policy": {{ .delete_policy }}
+spec:
+  template:
+    metadata:
+      name: {{ include "basic-deployment.name" $ }}-{{ .name }}
+      labels:
+        app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+        app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+        helm.sh/chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    spec:
+      {{- toYaml .spec | nindent 6 }}
+{{- end }}
