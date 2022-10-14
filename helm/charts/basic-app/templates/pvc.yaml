@@ -1,0 +1,21 @@
+{{ if .Values.storage.enabled -}}
+{{- with .Values.storage -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: {{ $.Release.Name }}
+  name: {{ $.Release.Name }}-data
+spec:
+  accessModes:
+    {{- toYaml .accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .size }}
+  storageClassName: {{ .storageClassName }}
+  volumeMode: {{ .volumeMode }}
+{{- if .volumeNamePrefix }}
+  volumeName: {{ .volumeNamePrefix }}-{{ $.Release.Namespace }}-{{ $.Release.Name }}
+{{- end }}
+{{- end }}
+{{- end }}

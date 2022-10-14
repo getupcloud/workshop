@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: 01-deploy
+  name: 01-deploy
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: 01-deploy
+  template:
+    metadata:
+      labels:
+        app: 01-deploy
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}

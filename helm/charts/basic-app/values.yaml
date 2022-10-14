@@ -1,0 +1,184 @@
+# Default values for basic-app.
+
+nameOverride: ""
+fullnameOverride: ""
+
+################
+## Deployment ##
+################
+
+replicas: 1
+
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+
+# command: []
+
+# args: []
+
+env: []
+
+envFrom: {}
+#  configMaps:
+#  - name: myconfig
+#    optional: false
+#  - data:
+#      MYVAR1: myvalue-1
+#      MYVAR2: myvalue-2
+#    optional: false
+#  secrets:
+#  - name: mysecret
+#    optional: false
+#  - data:
+#      USERNAME: plaintext-username
+#      PASSWORD: plaintext-password
+#    optional: false
+
+imagePullSecrets: []
+
+#- name: azure-container-registry-credentials
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  # capabilities:
+  #   drop:
+  #   - ALL
+
+containerPort: 8080
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+livenessProbe: null
+readinessProbe: null
+
+
+
+#############
+## Service ##
+#############
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+
+###################
+## Configuration ##
+###################
+
+configMap:
+  enabled: false
+  mountPath: ""
+  data: {}
+
+secret:
+  enabled: false
+  mountPath: ""
+  data: {}
+
+#############
+## Storage ##
+#############
+
+storage:
+  enabled: false
+  storageClassName: default
+  size: 10Gi
+  mountPath: /data
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+
+  #pv:
+  #  name: mypv
+  #  annotations: {}
+  #  labels: {}
+  #  spec: {}
+
+  ## Example EFS
+  #storageClassName: efs-sc
+  #size: "1Gi" ## ignored by csi
+  #mountPath: /my-data
+  #volumeMode: Filesystem
+  #accessModes:
+  #- ReadWriteMany
+  #volumeNamePrefix: efs
+  #volume:
+  #  persistentVolumeReclaimPolicy: Retain
+  #  csi:
+  #    driver: efs.csi.aws.com
+  #    volumeHandle: fs-xxxxxxxx::fsap-xxxxxxxxxxxxxxxxx
+
+###################
+##    Ingress    ##
+###################
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+  - name: exemplo.com
+    path: /
+  secretName: "exemplo-tls"
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+  #
+
+## https://helm.sh/docs/topics/charts_hooks/
+# pre-install	Executes after templates are rendered, but before any resources are created in Kubernetes
+# post-install	Executes after all resources are loaded into Kubernetes
+# pre-delete	Executes on a deletion request before any resources are deleted from Kubernetes
+# post-delete	Executes on a deletion request after all of the release's resources have been deleted
+# pre-upgrade	Executes on an upgrade request after templates are rendered, but before any resources are updated
+# post-upgrade	Executes on an upgrade request after all resources have been upgraded
+# pre-rollback	Executes on a rollback request after templates are rendered, but before any resources are rolled back
+# post-rollback	Executes on a rollback request after all resources have been modified
+# test	Executes when the Helm test subcommand is invoked ( view test docs)
+
+hooks: []
+#- name: migrate-db
+#  hooks:
+#  - pre-install
+#  - pre-upgrade
+#  weight: 1
+#  delete_policy: before-hook-creation
+#  spec:
+#    restartPolicy: Never
+#    containers:
+#    - name: migrate
+#      image: "alpine:3.3"
+#      command:
+#      - /bin/sleep
+#      - 5

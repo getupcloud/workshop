@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: app-05
+  namespace: flux-system
+spec:
+  releaseName: app-05
+  targetNamespace: default
+  storageNamespace: default
+  chart:
+    spec:
+      chart: basic-app
+      sourceRef:
+        kind: HelmRepository
+        name: getup
+      version: 0.0.2
+  dependsOn: []
+  install:
+    createNamespace: true
+    disableWait: true
+    remediation:
+      retries: -1
+  interval: 1m
+  values:
+    #-----------------------------------------------------#
+    #                      Deployment                     #
+    #-----------------------------------------------------#
+    image:
+      repository: docker.io/mmmarceleza/app4:ba88c0c-20220916140545 # {"$imagepolicy": "flux-system:app-05"}
+    replicaCount: 1
+    containerPort: 80
+    #-----------------------------------------------------#
+    #                        Service                      #
+    #-----------------------------------------------------#
+    service:
+      enabled: true
+      type: ClusterIP
+      port: 8080
