@@ -11,17 +11,26 @@ Realizado remotamente,  o treinamento de Container e Kubernetes visa apresentar 
 ### Conteúdo
 
 - Build
-  - [Dockerfile](docker)
-  - [Ferramentas de build](docker)
+  - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
-  - [Namespaces](namespaces)
+  - [Namespace](namespaces)
   - [Pod](pod)
   - [Deployment](deployment)
-  - Estratégias de deploy
-  - Chegagem da saúde das aplicações com Probes
-  - Autoscaling com HPA
-  - Entrega de software com [Kustomize](kustomize) e [Flux](flux)
+  - [Service](service)
+  - [Resources](resources)
+  - [HPA](hpa)
+  - [Probes](probes)
+  - [Volumes](volumes)
+  - [ConfigMap](configmap)
+  - [Secrets](secret)
+  - [Ingress](ingress)
+  - [DaemonSet](daemonset)
+  - [StatefulSet](statefulset)
+  - [CronJob](cronjob)
+  - [Operators](operators)
+  - [Kustomize](kustomize)
+  - [Flux](flux)
 
 ## Kubernetes Developer
 
@@ -30,14 +39,15 @@ O treinamento Kubernetes Developer é focado para times de desenvolvimento do cl
 ### Conteúdo
 
 - Build
-  - [Dockerfile](docker)
-  - [Ferramentas de build](docker)
+  - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
-  - [Namespaces](namespaces)
+  - [Namespace](namespaces)
   - [Pod](pod)
   - [Deployment](deployment)
-  - Estratégias de deploy
-  - Chegagem da saúde das aplicações com Probes
-  - Autoscaling com HPA
-  - Entrega de software com [Kustomize](kustomize) e [Flux](flux)
+  - [Service](service)
+  - [Resources](resources)
+  - [HPA](hpa)
+  - [Probes](probes)
+  - [Kustomize](kustomize)
+  - [Flux](flux)
