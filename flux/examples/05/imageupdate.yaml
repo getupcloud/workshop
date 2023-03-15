@@ -14,12 +14,12 @@ spec:
         branch: main
     commit:
       author:
-        email: marcelo_ufv@yahoo.com.br
+        email: ops@getupcloud.com
         name: FluxCD
       messageTemplate: |-
         Automatic commit from FluxCD: {{range .Updated.Images}}{{println .}}{{end}}
     push:
       branch: main
   update:
-    path: "kubernetes/flux/examples/05/"
+    path: "flux/examples/05/"
     strategy: Setters
