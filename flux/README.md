@@ -55,7 +55,7 @@ flux uninstall
 flux bootstrap github \
   --owner=mmmarceleza \
   --repository=workshop \
-  --branch=developer \
+  --branch=main \
   --path=flux/examples/01 \
   --interval=1m \
   --personal
@@ -87,8 +87,8 @@ flux uninstall
 ```
 flux bootstrap github \
   --owner=mmmarceleza \
-  --repository=devops \
-  --path=kubernetes/flux/examples/02 \
+  --repository=main \
+  --path=flux/examples/02 \
   --interval=1m \
   --personal
 ```
@@ -149,8 +149,8 @@ flux uninstall
 ```
 flux bootstrap github \
   --owner=mmmarceleza \
-  --repository=devops \
-  --path=kubernetes/flux/examples/03 \
+  --repository=workshop \
+  --path=/flux/examples/03 \
   --interval=1m \
   --personal
 ```
@@ -172,8 +172,8 @@ flux uninstall
 ```
 flux bootstrap github \
   --owner=mmmarceleza \
-  --repository=devops \
-  --path=kubernetes/flux/examples/04 \
+  --repository=workshop \
+  --path=flux/examples/04 \
   --interval=1m \
   --personal
 ```
@@ -196,8 +196,8 @@ flux uninstall
 flux bootstrap github \
   --components-extra=image-reflector-controller,image-automation-controller \
   --owner=mmmarceleza \
-  --repository=devops \
-  --path=kubernetes/flux/examples/05 \
+  --repository=workshop \
+  --path=flux/examples/05 \
   --interval=1m \
   --read-write-key=true \
   --personal
@@ -210,23 +210,31 @@ flux bootstrap github \
 ```console
 flux uninstall
 ``` 
-## Command to connect this repo with your cluster
 
-- Create a Flux gitrepository:
+### 06 - Installing and using Weave Gitops
 
-```console
-flux create source git devops \
-  --url=https://github.com/mmmarceleza/devops.git \
-  --branch=main \
-  --interval=5m
+
+- Install Weave Gitops:
+
+```
+curl --silent --location "https://github.com/weaveworks/weave-gitops/releases/download/v0.16.0/gitops-$(uname)-$(uname -m).tar.gz" | tar xz -C /tmp
+sudo mv /tmp/gitops /usr/local/bin
+gitops version
 ```
 
-- Create a Flux kustomization:
+- Create a file with a HelmRepository and HelmRelease to deploy Weave GitOps:
 
-```console
-flux create kustomization devops \
-  --source=devops \
-  --path="./kubernetes/flux/apps/" \
-  --prune=true \
-  --interval=5m
 ```
+PASSWORD="<your password>"
+gitops create dashboard ww-gitops \
+  --password=$PASSWORD \
+  --export > /tmp/weave-gitops.yaml
+```
+
+- Apply the HelmRepository and HelmRelease to your cluster:
+
+```
+kubectl apply -f weave-gitops.yaml
+``` 
+
+Optionally, you can push the file to your Flux GitRepository source, to let Flux reconcile it.
