@@ -234,7 +234,7 @@ gitops create dashboard ww-gitops \
 - Apply the HelmRepository and HelmRelease to your cluster:
 
 ```
-kubectl apply -f weave-gitops.yaml
+kubectl apply -f /tmp/weave-gitops.yaml
 ``` 
 
 Optionally, you can push the file to your Flux GitRepository source, to let Flux reconcile it.
