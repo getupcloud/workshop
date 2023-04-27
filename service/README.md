@@ -99,7 +99,7 @@ kubectl expose deploy/nginx --port=80 --target-port=80 --type=ClusterIP
 ```
 
 ```
-kubectl port-forward svc/nginx 8080:80
+kubectl port-forward --address 0.0.0.0 svc/nginx 8080:80
 ```
 
 #### 05 - LoadBalancer
