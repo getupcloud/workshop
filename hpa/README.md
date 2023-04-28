@@ -8,6 +8,10 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/late
 
 Para concluir a instalação, edite o deployment adicionando um campo `--kubelet-insecure-tls` da lista de `args` do container.
 
+```
+kubectl edit -n kube-system deployment metrics-server
+```
+
 Instale o deployment de exemplo abaixo e inspecione os objetos no cluster:
 
 ```
