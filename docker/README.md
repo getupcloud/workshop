@@ -1,6 +1,6 @@
 # Docker
 
-Este documento abordará os princípios básicos do Docker e a construção de imagens seguindo as [melhores práticas](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/). Uma imagem Docker consiste em uma estrutura de camadas apenas de leitura, criadas a partir de um arquivo de instrução `Dockerfile`.
+Este documento abordará os princípios básicos do Docker e a construção de imagens seguindo as [melhores práticas](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/). Uma imagem Docker consiste em uma estrutura de camadas apenas de leitura, criadas a partir de um arquivo de instrução `Dockerfile`. A descrição sobre os comandos para a criação de um dockerfile pode ser encontrados [aqui](https://docs.docker.com/engine/reference/builder/)
 
 ## Exercício 01
 
