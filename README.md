@@ -14,6 +14,7 @@ Realizado remotamente,  o treinamento de Container e Kubernetes visa apresentar 
   - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
+  - [Kubernetes Dashboard](dashboard)
   - [Namespace](namespace)
   - [Pod](pod)
   - [Deployment](deployment)
@@ -42,6 +43,7 @@ O treinamento Kubernetes Developer é focado para times de desenvolvimento do cl
   - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
+  - [Kubernetes Dashboard](dashboard)
   - [Namespace](namespace)
   - [Pod](pod)
   - [Deployment](deployment)
