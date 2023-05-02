@@ -18,7 +18,8 @@ helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard \
 --set extraArgs[1]='--disable-settings-authorizer' \
 --set extraArgs[2]='--enable-insecure-login' \
 --set extraArgs[3]='--insecure-bind-address=0.0.0.0' \
---set metricsScraper.enabled=true
+--set metricsScraper.enabled=true \
+--wait
 ```
 
 Crie os seguintes objetos de permissionamento para visualização do cluster:
