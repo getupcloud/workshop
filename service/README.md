@@ -54,12 +54,6 @@ kubectl expose deploy/nginx --port=80 --target-port=80 --type=ClusterIP
 
 #### 03 - NodePort
 
-Inicie um cluster kind com três nós ([referência de config](https://raw.githubusercontent.com/mmmarceleza/devops/main/kubernetes/kind/config.yaml)):
-
-```
-kind create cluster --config config.yaml
-```
-
 Crie um deployment com 2 réplicas:
 
 ```
@@ -75,7 +69,7 @@ kubectl expose deploy/nginx --port=80 --target-port=80 --type=NodePort
 Identifique o endereço IP de cada nó:
 
 ```
-docker inspect ID
+kubectl get nodes -o wide
 ```
 
 Verifique se a conexão com porta alta do service é fechada com sucesso:
