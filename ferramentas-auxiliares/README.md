@@ -39,4 +39,18 @@ Por fim, acesse a opção de tráfego de portas do killercoda e selecione a port
 
 ## Metrics Server
 
+Bloco de comandos para instalação da aplicação:
 
+
+```
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm repo update
+helm upgrade --install metrics-server metrics-server/metrics-server -n metrics-server --create-namespace \
+--version 3.10.0 \
+--set args={--kubelet-insecure-tls}
+```
+
+### Referências usadas:
+
+- https://github.com/kubernetes-sigs/metrics-server
+- https://artifacthub.io/packages/helm/metrics-server/metrics-server
