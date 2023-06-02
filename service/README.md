@@ -101,18 +101,6 @@ kubectl port-forward --address 0.0.0.0 svc/nginx 8080:80
 Instale o metallb:
 
 ```
-kubectl edit configmap -n kube-system kube-proxy
-```
-O campo `strictARP` deve ser alterado para `true`.
-```
-apiVersion: kubeproxy.config.k8s.io/v1alpha1
-kind: KubeProxyConfiguration
-mode: "ipvs"
-ipvs:
-  strictARP: true
-```
-
-```
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.4/config/manifests/metallb-native.yaml
 ```
 
