@@ -1,13 +1,5 @@
 ### Usando Resources
 
-Instale o metrics-server como pré-requisito para os exemplos a seguir:
-
-```
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-```
-
-Para concluir a instalação, edite o deployment adicionando um campo `--kubelet-insecure-tls` da lista de `args` do container.
-
 #### 01 - Especificação de *requests* e *limits* de memória:
 
 
