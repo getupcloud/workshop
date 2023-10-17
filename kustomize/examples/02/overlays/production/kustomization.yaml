@@ -10,5 +10,5 @@ resources:
 
 namespace: production
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - path: deployment.yaml
