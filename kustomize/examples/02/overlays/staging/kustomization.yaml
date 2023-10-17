@@ -10,5 +10,5 @@ resources:
 
 namespace: staging
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - path: deployment.yaml
