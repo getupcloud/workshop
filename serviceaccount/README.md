@@ -39,8 +39,8 @@ kubectl create ns getup
 - Verifique a serviceaccount desse novo namespace
 
 ```
-kubectl get sa
-kubectl get sa deafult -oyaml
+kubectl get sa -n getup
+kubectl get sa -n getup default -oyaml
 ```
 
 - provisione um Pod de nginx novamente e avalie como ele usa o objeto serviceaccount
