@@ -14,7 +14,7 @@ Realizado remotamente,  o treinamento de Container e Kubernetes visa apresentar 
   - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
-  - [Kubernetes Dashboard](dashboard)
+  - [Kubernetes Dashboard](ferramentas-auxiliares)
   - [Namespace](namespace)
   - [Pod](pod)
   - [Deployment](deployment)
