@@ -4,7 +4,7 @@
 
 
 
-## Kubernetes Administrator
+## Kubernetes Administrator (20h)
 
 Realizado remotamente,  o treinamento de Container e Kubernetes visa apresentar os conceitos das tecnologias de Container e Kubernetes e seu funcionamento na prática.
 
@@ -33,7 +33,7 @@ Realizado remotamente,  o treinamento de Container e Kubernetes visa apresentar 
   - [Kustomize](kustomize)
   - [Flux](flux)
 
-## Kubernetes Developer
+## Kubernetes Developer (10h)
 
 O treinamento Kubernetes Developer é focado para times de desenvolvimento do cliente e fábricas de software terceiras. Nele, inicialmente, são apresentados os principais conceitos, componentes e melhores práticas no desenvolvimento de software para rodar em ambientes Kubernetes.
 
@@ -53,3 +53,5 @@ O treinamento Kubernetes Developer é focado para times de desenvolvimento do cl
   - [Probes](probes)
   - [Kustomize](kustomize)
   - [Flux](flux)
+ 
+Sugerimos usar o [Kubernetes Playground do Killer Coda](https://killercoda.com/playgrounds/scenario/kubernetes) para executar os exercícios práticos.
