@@ -5,7 +5,7 @@
 Características de um pod:
 
 - cada pod possui um endereço ip único, acessível de qualquer outro dentro do cluster;
-- dentro de um mesmo pod, os containers podem se comunicar através de localhost:porta
+- dentro de um mesmo pod, os containers podem se comunicar através de localhost:port
 
 ![pod](../img/pod.png)
 
@@ -15,7 +15,7 @@ Características de um pod:
 
 ### 01 - Pod simples
 
-Exemplo de manifesto de um pod contento uma imagem de nginx:
+Exemplo de manifesto de um pod contendo uma imagem de nginx:
 
 ```
 apiVersion: v1
