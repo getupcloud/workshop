@@ -1,138 +1,114 @@
 #### 01 - Liveness com comando
 
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    test: liveness
-  name: liveness-exec
-spec:
-  containers:
-  - name: liveness
-    image: k8s.gcr.io/busybox
-    args:
-    - /bin/sh
-    - -c
-    - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
-    livenessProbe:
-      exec:
-        command:
-        - cat
-        - /tmp/healthy
-      initialDelaySeconds: 5
-      periodSeconds: 5
+```sh
+kubectl create deployment liveness-exec --image=nginx -o yaml --dry-run > probes.yaml
 ```
 
-```
-watch kubectl get ev,pods
+Adicione ao deployment:
+
+```yaml
+command:
+- /bin/sh
+- -c
+- |
+  echo $(date) creating /tmp/healthy
+  touch /tmp/healthy
+  sleep 30
+  echo $(date) removing /tmp/healthy
+  rm -f /tmp/healthy
+  sleep $((10 * 60))
+
+livenessProbe:
+  exec:
+    command:
+    - cat
+    - /tmp/healthy
+  initialDelaySeconds: 5
+  periodSeconds: 2
+  failureThreshold: 2
 ```
 
-```
-kubectl apply -f kubectl apply -f exemplo-01.yaml
+```sh
+watch -d -n1 kubectl get ev,ep,pods
+kubectl apply -f kubectl apply -f probes.yaml
 ```
 
 #### 02 - Readiness com comando
 
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    test: readiness
-  name: readiness-exec
-spec:
-  containers:
-  - name: readiness
-    image: k8s.gcr.io/busybox
-    args:
-    - /bin/sh
-    - -c
-    - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
-    readinessProbe:
-      exec:
-        command:
-        - cat
-        - /tmp/healthy
-      initialDelaySeconds: 5
-      periodSeconds: 5
+Substitua `livenessProbe` por `readinessProbe`:
+
+```sh
+kubectl apply -f probe.yaml
 ```
 
-```
-watch kubectl get ev,pods
-```
-
-```
-kubectl apply -f exemplo-02.yaml
-```
-
-#### 03 - Liveness com requisição HTTP
+#### 03 - Probe com requisição HTTP
 
 O Liveness probe envia requisições HTTP relugares. Se o retorno for maior ou igual a 200 e menor do que 400, o pod é considerado saudável, caso contrário ele é reiniciado pelo kubelet.
 
+Altera `readinessProbe` para:
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /
+    port: 80
+    httpHeaders:
+    - name: Custom-Header
+      value: Awesome
+  initialDelaySeconds: 3
+  periodSeconds: 3
+  failureThreshold: 1
 ```
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    test: liveness
-  name: liveness-http
-spec:
-  containers:
-  - name: liveness
-    image: k8s.gcr.io/liveness
-    args:
-    - /server
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 8080
-        httpHeaders:
-        - name: Custom-Header
-          value: Awesome
-      initialDelaySeconds: 3
-      periodSeconds: 3
+
+```sh
+kubectl apply -f probe.yaml
+```
+
+#### 04 - Probe com requisição TCP
+
+Altera `readinessProbe` para:
+
+```yaml
+readinessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 5
 ```
 
 ```
-watch kubectl get ev,pods
+kubectl apply -f probe.yaml
 ```
 
-```
-kubectl apply -f exemplo-03.yaml
+#### 05 - Startup Probe
+
+Startup probe executa apenas na inicialização do container até que este retorne sucesso. Logo após, os outros probes entram em ação.
+Serve para dar um tempo de inicialização para o processo, sem depender do `initialDelaySeconds`.
+
+Substitua `readinessProbe` por `startupProbe` e modifique o `command`:
+
+```yaml
+
+command:
+- /bin/sh
+- -c
+- |
+  echo $(date) initializing process...
+  sleep 15
+  echo $(date) creating /tmp/healthy
+  touch /tmp/healthy
+  sleep $((10 * 60))
+
+startupProbe:
+  exec:
+    command:
+    - cat
+    - /tmp/healthy
+  initialDelaySeconds: 5
+  periodSeconds: 2
+  failureThreshold: 10
 ```
 
-#### 04 - Liveness e Readiness com requisição TCP
-
-```
-apiVersion: v1
-kind: Pod
-metadata:
-  name: goproxy
-  labels:
-    app: goproxy
-spec:
-  containers:
-  - name: goproxy
-    image: k8s.gcr.io/goproxy:0.1
-    ports:
-    - containerPort: 8080
-    readinessProbe:
-      tcpSocket:
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 10
-    livenessProbe:
-      tcpSocket:
-        port: 8080
-      initialDelaySeconds: 15
-      periodSeconds: 20
-```
-
-```
-watch kubectl get ev,pods
-```
-
-```
-kubectl apply -f exemplo-04.yaml
+```sh
+kubectl apply -f probe.yaml
 ```
