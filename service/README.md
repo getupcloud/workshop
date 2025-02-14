@@ -142,36 +142,13 @@ kubectl expose deploy/nginx --port=80 --target-port=80 --type=LoadBalancer
 Crie os seguintes recursos no cluster:
 
 ```
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: app
-  labels:
-    app: server
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: web
-  template:
-    metadata:
-      labels:
-        app: web
-    spec:
-      containers:
-      - name: nginx
-        image: nginx
-        ports:
-        - containerPort: 80
----
 apiVersion: v1
 kind: Service
 metadata:
   name: regular-svc
 spec:
   selector:
-    app: web
+    app: nginx
   ports:
     - protocol: TCP
       port: 80
@@ -184,7 +161,7 @@ metadata:
 spec:
   clusterIP: None
   selector:
-    app: web
+    app: nginx
   ports:
     - protocol: TCP
       port: 80
