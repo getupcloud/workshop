@@ -194,7 +194,7 @@ spec:
 Rode um pod para avaliar a resolução de DNS em cima de cada service criado:
 
 ```
-kubectl run -it --rm testedns --image=nicolaka/netshoot
+$ kubectl run -it --rm testedns --image=nicolaka/netshoot
 > nslookup regular-svc.default.svc.cluster.local
 > nslookup headless-svc.default.svc.cluster.local
 ```
