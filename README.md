@@ -2,7 +2,7 @@
 
 ![img01](img/img01.png)
 
-
+> Sugerimos usar o [Kubernetes Playground do Killer Coda](https://killercoda.com/playgrounds/scenario/kubernetes) para executar os exercícios práticos.
 
 ## Kubernetes Administrator (20h)
 
@@ -54,4 +54,4 @@ O treinamento Kubernetes Developer é focado para times de desenvolvimento do cl
   - [Kustomize](kustomize)
   - [Flux](flux)
  
-Sugerimos usar o [Kubernetes Playground do Killer Coda](https://killercoda.com/playgrounds/scenario/kubernetes) para executar os exercícios práticos.
+
