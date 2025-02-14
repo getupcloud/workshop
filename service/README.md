@@ -196,7 +196,7 @@ spec:
       targetPort: 80
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: app-sts
   labels:
