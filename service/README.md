@@ -101,7 +101,7 @@ kubectl port-forward --address 0.0.0.0 svc/nginx 8080:80
 Instale o metallb:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.4/config/manifests/metallb-native.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
 ```
 
 Aplique o seguinte manifesto no cluster:
