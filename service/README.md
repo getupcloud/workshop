@@ -137,7 +137,7 @@ kubectl create deploy nginx --image=nginx:alpine
 kubectl expose deploy/nginx --port=80 --target-port=80 --type=LoadBalancer
 ```
 
-#### 06 - Headless
+#### 06 - Headless - Deployment
 
 Crie os seguintes recursos no cluster:
 
@@ -168,14 +168,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: regular-service
+  name: regular-svc
 spec:
   selector:
     app: web
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -188,11 +188,65 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 80
 ```
 
 Rode um pod para avaliar a resolução de DNS em cima de cada service criado:
 
 ```
 kubectl run -it --rm testedns --image=nicolaka/netshoot
+> nslookup regular-svc.default.svc.cluster.local
+> nslookup headless-svc.default.svc.cluster.local
 ```
+
+#### 07 - Headless - StatefulSet
+
+Crie os seguintes recursos no cluster:
+
+```
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-svc-sts
+spec:
+  clusterIP: None
+  selector:
+    app: web-sts
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-sts
+  labels:
+    app: server-sts
+spec:
+  serviceName: headless-svc-sts
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-sts
+  template:
+    metadata:
+      labels:
+        app: web-sts
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+
+Rode um pod para avaliar a resolução de DNS em cima de cada service e pod criados:
+
+```
+$ kubectl run -it --rm testedns --image=nicolaka/netshoot
+> nslookup headless-svc-sts.default.svc.cluster.local
+> nslookup app-sts-0.headless-svc-sts.default.svc.cluster.local
+```
+
