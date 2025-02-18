@@ -2,30 +2,37 @@
 
 ## Introdução
 
-![ingress](ingress.svg)
+Ingress permite acessar serviços internos HTTP(S) de fora do cluster através de mapeamentos de hostnames, URIs e PATHs.
 
 ### Usando Ingress
 
+Utilizaremos o controlador metallb para permitir a criação de services do tipo LoadBalancer, que implementa um VIP dentro do kubernetes.
 
-Instale o metallb:
+
+Primeiro é necessário garantir queo kube-proxy está devidamente configurado para rodar junto com metallb. Edite o config map abaixo e mude, se necessário, os campos `mode` e `ipvs.strictARP`.
 
 ```
 kubectl edit configmap -n kube-system kube-proxy
 ```
-O campo `strictARP` deve ser alterado para `true`.
+
+Verifique os valores abaixo:
+
 ```
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
-mode: "ipvs"
+...
+mode: "ipvs"             <---- MODE deve ser `ipvs`
 ipvs:
-  strictARP: true
+  strictARP: true        <---- strictARP=true impede que a interface kube-ipvs0 respondar por requisições ARP, o que interfere no funcionamento do metallb
 ```
+
+Por fim, instale o metallb:
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.4/config/manifests/metallb-native.yaml
 ```
 
-Aplique o seguinte manifesto no cluster:
+Aplique o seguinte manifesto no cluster para atribuir automaticamente IPs do range `172.30.1.100 - 172.30.1.200` aos services do tipo LoadBalancer.
 
 ```
 ---
@@ -48,30 +55,33 @@ spec:
   - first-pool
 ```
 
+Instale o ingress nginx:
+
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-```
-
-```
 helm repo update
-```
-
-```
 helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace
 ```
 
-```
-kubectl create deploy nginx --port=80 --image=nginx:alpine
-```
+Crie um depoyment para sua aplicação, expondo a porta 9899 do container na porta 80 do service:
 
 ```
-kubectl expose deploy/nginx --port=80 --target-port=80
+kubectl create deploy podinfo --port=9899 --image=ghcr.io/stefanprodan/podinfo:latest
+kubectl expose deploy/podinfo --port=80 --target-port=9899
 ```
 
-```
-kubectl create ingress nginx --class=nginx --rule="nginx.marcelo.local/=nginx:80"
-```
+Crie um objeto Ingress para expor o service para fora do cluster. Este será totalmente gerenciado pelo controlador `ingress-nginx`
 
 ```
-curl http://nginx.marcelo.local
+kubectl create ingress podinfo --class=nginx --rule="/=nginx:80"
+```
+
+Configure o "DNS" do host para responder a URL do Ingress com o IP do service:
+
+```
+kubectl get service ingress-nginx-controller -o wide          #<------------ Anote o EXTERNAL-IP
+echo EXTERNAL-IP podinfo.exemplo.com >>  /etc/hosts
+ping podinfo.exemplo.com
+
+curl http://podinfo.exemplo.com
 ```
