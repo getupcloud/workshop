@@ -29,7 +29,7 @@ ipvs:
 Por fim, instale o metallb:
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.4/config/manifests/metallb-native.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
 ```
 
 Aplique o seguinte manifesto no cluster para atribuir automaticamente IPs do range `172.30.1.100 - 172.30.1.200` aos services do tipo LoadBalancer.
