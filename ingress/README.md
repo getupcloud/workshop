@@ -66,14 +66,14 @@ helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create
 Crie um depoyment para sua aplicação, expondo a porta 9899 do container na porta 80 do service:
 
 ```
-kubectl create deploy podinfo --port=9898 --image=ghcr.io/stefanprodan/podinfo:latest
-kubectl expose deploy/podinfo --port=80 --target-port=9898
+kubectl create deploy podinfo --port=9898 --image=ghcr.io/stefanprodan/podinfo:latest -n default
+kubectl expose deploy/podinfo --port=80 --target-port=9898 -n default
 ```
 
 Crie um objeto Ingress para expor o service para fora do cluster. Este será totalmente gerenciado pelo controlador `ingress-nginx`
 
 ```
-kubectl create ingress podinfo --class=nginx --rule="podinfo.exemplo.com/*=podinfo:80"
+kubectl create ingress podinfo --class=nginx --rule="podinfo.exemplo.com/*=podinfo:80" -n default
 ```
 
 Configure o "DNS" do host para responder a URL do Ingress com o IP do service:
