@@ -10,8 +10,8 @@ COPY . .
 
 EXPOSE 8080
 
-RUN useradd -ms /bin/bash  nodejs
+RUN useradd -ms /bin/bash  nodejs 
 
-USER nodejs
+USER nodejs #especificação de permissão de uso como não root
 
 CMD [ "node", "server.js" ]
