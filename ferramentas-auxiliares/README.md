@@ -2,8 +2,28 @@
 
 Seção dedicada com as instruções de instalação de aplicações auxiliares aos exercícios do Workshop.
 
-- [Kubernetes Dashboard](#dashboard)
 - [Metrics Server](#metrics-server)
+- [Kubernetes Dashboard](#kubernetes-dashboard)
+- [Outras ferramentas de Administração](#outras-ferramentas-de-administração)
+
+
+## Metrics Server
+
+Bloco de comandos para instalação da aplicação:
+
+```
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm repo update
+helm upgrade --install metrics-server metrics-server/metrics-server -n metrics-server --create-namespace \
+--version 3.10.0 \
+--set args={--kubelet-insecure-tls}
+```
+
+### Referências usadas:
+
+- https://github.com/kubernetes-sigs/metrics-server
+- https://artifacthub.io/packages/helm/metrics-server/metrics-server
+
 
 ## Kubernetes Dashboard
 
@@ -35,23 +55,6 @@ Por fim, acesse a opção de tráfego de portas do killercoda e selecione a port
 - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 - https://github.com/killercoda/scenario-examples/blob/main/kubernetes-dashboard/assets/dashboard.yaml
 - https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard
-
-## Metrics Server
-
-Bloco de comandos para instalação da aplicação:
-
-```
-helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
-helm repo update
-helm upgrade --install metrics-server metrics-server/metrics-server -n metrics-server --create-namespace \
---version 3.10.0 \
---set args={--kubelet-insecure-tls}
-```
-
-### Referências usadas:
-
-- https://github.com/kubernetes-sigs/metrics-server
-- https://artifacthub.io/packages/helm/metrics-server/metrics-server
 
 ## Outras ferramentas de Administração
 
