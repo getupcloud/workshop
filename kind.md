@@ -30,10 +30,11 @@ Instale o MetalLB para usar services do tipo LoadBalancer:
 
 
 ```sh
-DOCKER_CIDR=$(docker network inspect kind --format '{{(index .IPAM.Config 0).Subnet}}')\
+DOCKER_CIDR=$(docker network inspect kind --format '{{(index .IPAM.Config 0).Subnet}}')
 PREFIX=$(cut -f1-2 -d. <<<$DOCKER_CIDR)
 NET=$(shuf -n1 -i 100-200)
 START=$(shuf -n1 -i 100-200)
+END=$((START + 8))
 METALLB_RANGE=$PREFIX.$NET.$START-$PREFIX.$NET.$END
 
 $ cat >metallb-values.yaml <<EOF
