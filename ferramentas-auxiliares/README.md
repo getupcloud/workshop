@@ -5,7 +5,7 @@ Seção dedicada com as instruções de instalação de aplicações auxiliares 
 - [Kubernetes Dashboard](#dashboard)
 - [Metrics Server](#metrics-server)
 
-## Dashboard
+## Kubernetes Dashboard
 
 Bloco de comandos para instalação da aplicação:
 ```
@@ -30,7 +30,6 @@ kubectl -n kubernetes-dashboard create token admin-user
 
 Por fim, acesse a opção de tráfego de portas do killercoda e selecione a porta 8080 do Host1 para ter acesso ao dashboard do seu cluster. Lembre-se de usar o token gerado nos comandos anteriores para se autenticar.
 
-
 ### Referências usadas:
 
 - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
@@ -40,7 +39,6 @@ Por fim, acesse a opção de tráfego de portas do killercoda e selecione a port
 ## Metrics Server
 
 Bloco de comandos para instalação da aplicação:
-
 
 ```
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
@@ -54,3 +52,21 @@ helm upgrade --install metrics-server metrics-server/metrics-server -n metrics-s
 
 - https://github.com/kubernetes-sigs/metrics-server
 - https://artifacthub.io/packages/helm/metrics-server/metrics-server
+
+## Outras ferramentas de Administração
+
+### K9S - TUI dashboard
+
+https://k9scli.io/
+
+### Lens - GUI dashboard
+
+https://k8slens.dev/
+
+### Rancher - Web dashboard
+
+https://www.rancher.com/quick-start
+
+### Karpor - GUI dashboard + search engine
+
+https://karpor.kusionstack.io/
