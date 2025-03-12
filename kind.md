@@ -37,7 +37,7 @@ START=$(shuf -n1 -i 100-200)
 END=$((START + 8))
 METALLB_RANGE=$PREFIX.$NET.$START-$PREFIX.$NET.$END
 
-$ cat >metallb-values.yaml <<EOF
+cat >metallb-values.yaml <<EOF
 configInline:
   address-pools:
   - name: default
