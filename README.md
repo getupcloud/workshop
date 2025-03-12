@@ -43,7 +43,7 @@ O treinamento Kubernetes Developer é focado para times de desenvolvimento do cl
   - [Boas práticas com Dockerfile](docker)
 - Deploy
   - [Introdução ao Kubernetes](introducao)
-  - [Kind](kind.md]
+  - [Kind](kind.md)
   - [Kubernetes Dashboard](ferramentas-auxiliares)
   - [Namespace](namespace)
   - [Pod](pod)
