@@ -140,11 +140,11 @@ Após `pods.spec.terminationGracePeriodSeconds` segundos, caso o container não 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: envs
+  name: sig
   labels:
-    app: envs
+    app: sig
 spec:
-  terminationGracePeriodSeconds: 5
+  terminationGracePeriodSeconds: 3
   containers:
   - name: app
     image: ubuntu
@@ -153,8 +153,8 @@ spec:
     - -c
     - |+
       echo Entrando...
-      trap 'echo "Sinal $(( $? - 128 )) recebido. Saindo..."' SIGTERM
-      sleep inf
+      trap 'echo "Sinal $(( $? - 128 )) recebido. Saindo..."; exit 3' SIGTERM
+      while true; do echo loop; sleep 1; done
 ```
 
 > 1. Veja https://docs.docker.com/reference/dockerfile/#stopsignal para utilizar outro sinal.
