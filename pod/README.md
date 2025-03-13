@@ -4,12 +4,12 @@
 
 Características de um pod:
 
-- cada pod possui um endereço ip único, acessível de qualquer outro dentro do cluster;
-- dentro de um mesmo pod, os containers podem se comunicar através de localhost:port
+- executa um ou mais containers, sendo escalonado de forma conjunta;
+- compartilha recursos de rede (interfaces, IPs, rotas, etc) com outros containers do mesmo pod;
+- compartilha, opcionalmente, storage com outros containers do mesmo pod (emptyDir, PVC, secrets/configmaps);
+- possui um endereço IP único no cluster, acessível a partir de qualquer outro pod do cluster;
 
 ![pod](../img/pod.png)
-
-
 
 ## Usando pods
 
@@ -47,17 +47,21 @@ metadata:
     app: nginx
 spec:
   containers:
-  - name: nginx-container
+
+  - name: web
     image: nginx
     ports:
     - containerPort: 80
+
   - name: sidecar
     image: curlimages/curl
-    command: ["/bin/sh"]
-    args: ["-c", "echo Hello from the sidecar container; sleep 3000"]
+    command:        ## executa command sem shell
+    - /bin/sh
+    - -c
+    - "echo Hello from the sidecar container; sleep inf"
 ```
 
-Salve o manifesto acima sob o nome sidecar.yaml e execute o seguinte comando:
+Salve o manifesto acima com o nome `sidecar.yaml` e execute o seguinte comando:
 
 ```
 kubectl apply -f sidecar.yaml
@@ -74,11 +78,88 @@ curl localhost
 Depois veja os logs separadamente de cada container:
 
 ```
-kubectl logs nginx-02 -c nginx-container
+kubectl logs nginx-02 -c web
 kubectl logs nginx-02 -c sidecar
 ```
 
-### 03 - Init containers
+
+### 02.1 - Variaveis de ambiente
+
+Variaveis de ambiente podem ser definidas em `pod.spec.containers.env[].{name, value}`. Tanteo `name` quanto `value` devem ser strings, portanto defina `value: "123"` ao inves de `value: 123`.
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envs
+  labels:
+    app: envs
+spec:
+  containers:
+
+  - name: app
+    image: nginx
+    env:
+    - name: MENSAGEM
+      value: "Hello from the sidecar container"
+    command:        ## executa command sem shell
+    - /bin/sh
+    - -c
+    - "echo $MENSAGEM; sleep inf"
+```
+
+Variáveis de abviente podem ser expandidas previamente, antes da criação do container usando a notação `$(NAME)`:
+
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envs
+  labels:
+    app: envs
+spec:
+  containers:
+
+  - name: app
+    image: nginx
+    env:
+    - name: MY_SHELL
+      value: "/bin/bash"
+    command:
+    - $(MY_SHELL)
+    - -c
+    - "echo Hello world; sleep inf"
+```
+### 03 - Sinais
+
+Ao deletar um pod (`kubectl delete pod/$name`), o kubelet do node envia o sinal `TERM`[1] para o processo terminar de forma graciosa.
+Após `pods.spec.terminationGracePeriodSeconds` segundos, caso o container não termine, o sinal `KILL` é enviado para finalizar o processo forçadamente.
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envs
+  labels:
+    app: envs
+spec:
+  terminationGracePeriodSeconds: 5
+  containers:
+  - name: app
+    image: ubuntu
+    command:
+    - /bin/bash
+    - -c
+    - |+
+      echo Entrando...
+      trap 'echo "Sinal $(( $? - 128 )) recebido. Saindo..."' SIGTERM
+      sleep inf
+```
+
+> 1. Veja https://docs.docker.com/reference/dockerfile/#stopsignal para utilizar outro sinal.
+
+### 04 - Init containers
 
 Crie um manifesto de nome *myapp.yaml* com o conteúdo abaixo:
 
